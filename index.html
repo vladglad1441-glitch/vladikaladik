@@ -139,7 +139,7 @@ input[type="number"]{appearance:textfield}
   <div class="container two grid">
     <div class="box">
       <h2 class="h2">О компании</h2>
-      <p id="aboutText" class="muted">CITYHOME — команда экспертов по недвижимости. Мы подбираем квартиры под цели клиента: инвестиции, переезд, расширение семьи. Работаем прозрачно, сопровождаем сделку от просмотра до передачи ключей.</p>
+      <p id="aboutText" class="muted">CITYHOME — команда не специалистом</p>
       <div class="tags" style="margin-top:10px">
         <span class="tag">Юр. сопровождение</span>
         <span class="tag">Ипотека</span>
@@ -150,19 +150,19 @@ input[type="number"]{appearance:textfield}
       <h2 class="h2">Почему мы</h2>
       <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
         <div class="card card-body">
-          <div class="price" style="color:var(--accent)">15+</div>
+          <div class="price" style="color:var(--accent)">2+</div>
           <div class="muted">лет опыта</div>
         </div>
         <div class="card card-body">
-          <div class="price" style="color:var(--accent-2)">3 дня</div>
+          <div class="price" style="color:var(--accent-2)">40 дней</div>
           <div class="muted">средний срок подбора</div>
         </div>
         <div class="card card-body">
-          <div class="price" style="color:var(--accent)">0%</div>
+          <div class="price" style="color:var(--accent)">110%</div>
           <div class="muted">скрытых комиссий</div>
         </div>
         <div class="card card-body">
-          <div class="price" style="color:var(--accent-2)">24/7</div>
+          <div class="price" style="color:var(--accent-2)">Никогда</div>
           <div class="muted">на связи</div>
         </div>
       </div>
@@ -188,9 +188,9 @@ input[type="number"]{appearance:textfield}
     </div>
     <div class="box" id="contact">
       <h2 class="h2">Контакты</h2>
-      <p><b>Телефон:</b> <span id="cPhone">+7 (999) 000-00-00</span></p>
-      <p><b>E-mail:</b> <span id="cEmail">info@cityhome.example</span></p>
-      <p><b>Офис:</b> <span id="cAddr">Москва, ул. Примерная, 10</span></p>
+      <p><b>Телефон:</b> <span id="cPhone">+4367763480888</span></p>
+      <p><b>E-mail:</b> <span id="cEmail">vladglad1441@gmail.com</span></p>
+      <p><b>Офис:</b> <span id="cAddr">Австрия Дом Моцарта 901</span></p>
       <div class="inline" style="margin-top:8px">
         <a id="socIg" class="btn small secondary" href="#" target="_blank">Instagram</a>
         <a id="socYt" class="btn small secondary" href="#" target="_blank">YouTube</a>
@@ -285,9 +285,9 @@ const DEFAULT_SETTINGS = {
   about: 'CITYHOME — команда экспертов по недвижимости. Мы подберём квартиру под ваши цели: инвестиции, переезд, расширение семьи.'
 };
 const DEFAULT_FLATS = [
-  {id:'f1', img:'https://images.unsplash.com/photo-1505691723518-36a5ac3b2d95?auto=format&fit=crop&w=1200&q=80', title:'Полу пустая квартира', loc:'Центр', rooms:2, area:44, price:11500000, desc:'Светлая кухня-гостиная, раздельный санузел, 10 минут до метро.'},
-  {id:'f2', img:'https://images.unsplash.com/photo-1616596874392-5ac1f19b6f2b?auto=format&fit=crop&w=1200&q=80', title:'Квартира без мебели', loc:'Север', rooms:1, area:27, price:6500000, desc:'Высокие потолки, тёплые полы, закрытый двор без машин.'},
-  {id:'f3', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'', loc:'Юг', rooms:3, area:72, price:15900000, desc:'Две детские, лоджия, зелёный район, рядом школы и садики.'}
+  {id:'f1', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Полу пустая квартира', loc:'Здеся', rooms:2, area:44, price:11500000, desc:'Светлая кухня-гостиная, раздельный санузел, 10 минут до метро.'},
+  {id:'f2', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Квартира без мебели', loc:'Тама', rooms:1, area:27, price:6500000, desc:'Высокие потолки, тёплые полы, закрытый двор без машин.'},
+  {id:'f3', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Квартира Квартира', loc:'Тута', rooms:3, area:72, price:15900000, desc:'Две детские, лоджия, зелёный район, рядом школы и садики.'}
 ];
 
 let SETTINGS = load(LS.settings, DEFAULT_SETTINGS);
@@ -526,4 +526,5 @@ $('#flatsGrid').addEventListener('click', (e)=>{
 </script>
 </body>
 </html>
+
 
