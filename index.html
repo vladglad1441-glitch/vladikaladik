@@ -154,6 +154,65 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   margin-top: 0;
 }
 </style>
+  /* ==== Мобильная адаптация ==== */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .hero {
+    min-height: 60vh;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero .search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero .search .input,
+  .hero .search button {
+    width: 100%;
+  }
+
+  .two {
+    grid-template-columns: 1fr;
+  }
+
+  .flats {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    font-size: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .side-nav {
+    display: none; /* скрываем боковую панель на мобильных */
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header .btn.small {
+    display: none; /* скрываем кнопку "Оставить заявку" в шапке */
+  }
+}
+
 </head>
 <body>
 
@@ -390,4 +449,5 @@ document.getElementById('flatsGrid').addEventListener('click', (e)=>{
 </script>
 </body>
 </html>
+
 
