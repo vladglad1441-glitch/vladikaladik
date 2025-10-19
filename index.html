@@ -77,7 +77,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 .footer{padding:28px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);text-align:center}
 
 /* side navigation */
-/* ==== Вертикальная боковая панель ==== */
 .side-nav {
   position: fixed;
   top: 50%;
@@ -90,18 +89,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   padding: 20px 14px;
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* тянем ссылки на одинаковую ширину */
+  align-items: stretch;
   gap: 12px;
   z-index: 100;
-  width: 160px; /* фиксированная ширина панели */
+  width: 160px;
 }
-
 .side-nav nav {
   display: flex;
-  flex-direction: column; /* вертикальная ориентация */
+  flex-direction: column;
   gap: 10px;
 }
-
 .side-nav a {
   display: block;
   color: var(--muted);
@@ -111,16 +108,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   text-align: left;
   transition: all .2s ease;
 }
-
-.side-nav a:hover {
-  background: rgba(255,255,255,.08);
-  color: var(--text);
-}
-
-@media (max-width: 860px) {
-  .side-nav { display: none; }
-}
-
+.side-nav a:hover {background: rgba(255,255,255,.08);color: var(--text);}
+@media (max-width: 860px) {.side-nav { display: none; }}
 
 /* modal */
 .flat-modal {
@@ -134,7 +123,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   z-index: 120;
 }
 .flat-modal.show { display: flex; }
-
 .flat-modal-inner {
   background: var(--surface);
   border: 1px solid rgba(255,255,255,.1);
@@ -146,15 +134,57 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   box-shadow: var(--shadow);
   padding: 20px;
 }
-.flat-modal-inner img {
-  border-radius: 12px;
-  margin-bottom: 10px;
+.flat-modal-inner img {border-radius: 12px;margin-bottom: 10px;}
+.flat-modal-inner h2 {margin-top: 0;}
+
+/* бургер меню */
+.burger {
+  display: none;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: 28px;
+  cursor: pointer;
 }
-.flat-modal-inner h2 {
-  margin-top: 0;
+
+/* адаптация */
+@media (max-width: 768px) {
+  .container {padding: 16px;}
+  .hero {min-height: 60vh;}
+  .hero h1 {font-size: 24px;}
+  .hero p {font-size: 14px;}
+  .hero .search {flex-direction: column;align-items: stretch;}
+  .hero .search .input, .hero .search button {width: 100%;}
+  .two {grid-template-columns: 1fr;}
+  .flats {grid-template-columns: 1fr;}
+  .card {font-size: 15px;}
+  .btn {width: 100%;justify-content: center;}
+  .side-nav {display: none;}
+  .nav {flex-wrap: wrap;gap: 10px;}
+  .header .btn.small {display: none;}
+
+  .burger {display: block;}
+
+  #mainNav {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 12px;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: var(--shadow);
+    z-index: 200;
+  }
+  #mainNav.show {display: flex;}
+  #mainNav a {padding: 10px;border-radius: 8px;}
+  #mainNav a:hover {background: rgba(255,255,255,.1);}
 }
 </style>
- </head>
+</head>
 <body>
 
 <!-- ===== Боковая панель ===== -->
@@ -170,7 +200,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 <header class="header">
   <div class="container nav">
     <div class="brand"><span class="dot"></span><span id="brandName">CITYHOME</span></div>
-    <nav class="nav">
+    <button class="burger" id="burgerBtn" aria-label="Открыть меню">☰</button>
+    <nav class="nav" id="mainNav">
       <a href="#catalog">Квартиры</a>
       <a href="#about">О компании</a>
       <a href="#contact">Контакты</a>
@@ -220,22 +251,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
     <div class="box">
       <h2 class="h2">Почему мы</h2>
       <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
-        <div class="card card-body">
-          <div class="price" style="color:var(--accent)">2+</div>
-          <div class="muted">лет опыта</div>
-        </div>
-        <div class="card card-body">
-          <div class="price" style="color:var(--accent-2)">40 дней</div>
-          <div class="muted">средний срок подбора</div>
-        </div>
-        <div class="card card-body">
-          <div class="price" style="color:var(--accent)">0%</div>
-          <div class="muted">скрытых комиссий</div>
-        </div>
-        <div class="card card-body">
-          <div class="price" style="color:var(--accent-2)">Всегда</div>
-          <div class="muted">на связи</div>
-        </div>
+        <div class="card card-body"><div class="price" style="color:var(--accent)">2+</div><div class="muted">лет опыта</div></div>
+        <div class="card card-body"><div class="price" style="color:var(--accent-2)">40 дней</div><div class="muted">средний срок подбора</div></div>
+        <div class="card card-body"><div class="price" style="color:var(--accent)">0%</div><div class="muted">скрытых комиссий</div></div>
+        <div class="card card-body"><div class="price" style="color:var(--accent-2)">Всегда</div><div class="muted">на связи</div></div>
       </div>
     </div>
   </div>
@@ -288,7 +307,7 @@ const money = n => new Intl.NumberFormat('ru-RU').format(Number(n||0));
 
 const FLATS = [
   {id:'f1', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Светлая квартира в центре', loc:'Центр', rooms:2, area:44, price:11500000, desc:'Светлая кухня-гостиная, раздельный санузел, 10 минут до метро.'},
-  {id:'f2', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Квартира у набережной', loc:'Набережная', rooms:3, area:72, price:15900000, desc:'Просторная гостиная, лоджия, зелёный район, рядом школы и садики.'},
+  {id:'f2', img:'https://images.unsplash.com/photo-1560448075-bb4bfc68a58c?auto=format&fit=crop&w=1200&q=80', title:'Квартира у набережной', loc:'Набережная', rooms:3, area:72, price:15900000, desc:'Просторная гостиная, лоджия, зелёный район, рядом школы и садики.'},
   {id:'f3', img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', title:'Уютная студия', loc:'Северный район', rooms:1, area:27, price:6500000, desc:'Высокие потолки, тёплые полы, закрытый двор без машин.'}
 ];
 
@@ -387,9 +406,11 @@ document.getElementById('flatsGrid').addEventListener('click', (e)=>{
   `;
   modal.classList.add('show');
 });
+
+/* бургер меню */
+const burgerBtn = document.getElementById('burgerBtn');
+const mainNav = document.getElementById('mainNav');
+burgerBtn.addEventListener('click', ()=> mainNav.classList.toggle('show'));
 </script>
 </body>
 </html>
-
-
-
