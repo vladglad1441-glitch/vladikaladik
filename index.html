@@ -6,13 +6,12 @@
 <title>CITYHOME — Продажа квартир</title>
 <style>
 :root{
-  /* палитра: зелёный, белый, чёрный, фиолетовый */
-  --bg:#0b0c0e;           /* почти чёрный */
-  --surface:#13151a;      /* тёмная поверхность */
-  --text:#f2f4f6;         /* белый текст */
-  --muted:#a7adb3;        /* серый текст */
-  --accent:#22c55e;       /* зелёный */
-  --accent-2:#8b5cf6;     /* фиолетовый */
+  --bg:#0b0c0e;
+  --surface:#13151a;
+  --text:#f2f4f6;
+  --muted:#a7adb3;
+  --accent:#22c55e;
+  --accent-2:#8b5cf6;
   --chip:#1b1e25;
   --radius:16px;
   --shadow:0 14px 40px rgba(0,0,0,.35);
@@ -59,7 +58,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 .grid{display:grid;gap:18px}
 
 /* cards / flats */
-.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;cursor:pointer}
 .card-body{padding:16px}
 .flats{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
 .fimg{aspect-ratio:16/11;background:#000;overflow:hidden}
@@ -76,26 +75,97 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 /* footer */
 .footer{padding:28px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);text-align:center}
 
-/* admin */
-.admin-hint{position:fixed;right:14px;bottom:14px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.35);backdrop-filter:blur(8px);padding:10px 12px;border-radius:12px;display:none;z-index:80}
-.admin-hint.show{display:block}
-.admin-panel{
-  position:fixed; right:16px; bottom:16px; z-index:90; width:min(480px,94vw);
-  background:var(--surface); border:1px solid rgba(255,255,255,.14); border-radius:14px; box-shadow:var(--shadow); display:none;
+/* side navigation */
+/* ==== Вертикальная боковая панель ==== */
+.side-nav {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* тянем ссылки на одинаковую ширину */
+  gap: 12px;
+  z-index: 100;
+  width: 160px; /* фиксированная ширина панели */
 }
-.admin-panel.show{display:block}
-.admin-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
-.admin-body{padding:12px 14px;display:grid;gap:12px;max-height:70vh;overflow:auto}
-.small{font-size:12px;color:var(--muted)}
-.row{display:grid;gap:8px}
-.inline{display:flex;gap:10px;flex-wrap:wrap}
-hr.sep{border:0;border-top:1px dashed rgba(255,255,255,.12);margin:6px 0}
-th,td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px;text-align:left}
-table{width:100%;border-collapse:collapse}
-input[type="number"]{appearance:textfield}
+
+.side-nav nav {
+  display: flex;
+  flex-direction: column; /* вертикальная ориентация */
+  gap: 10px;
+}
+
+.side-nav a {
+  display: block;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-align: left;
+  transition: all .2s ease;
+}
+
+.side-nav a:hover {
+  background: rgba(255,255,255,.08);
+  color: var(--text);
+}
+
+@media (max-width: 860px) {
+  .side-nav { display: none; }
+}
+
+
+/* modal */
+.flat-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+}
+.flat-modal.show { display: flex; }
+
+.flat-modal-inner {
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  max-width: 760px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+.flat-modal-inner img {
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.flat-modal-inner h2 {
+  margin-top: 0;
+}
 </style>
 </head>
 <body>
+
+<!-- ===== Боковая панель ===== -->
+<aside class="side-nav">
+  <nav>
+    <a href="#catalog">Каталог</a>
+    <a href="#about">О компании</a>
+    <a href="#lead">Заявка</a>
+    <a href="#contact">Контакты</a>
+  </nav>
+</aside>
+
 <header class="header">
   <div class="container nav">
     <div class="brand"><span class="dot"></span><span id="brandName">CITYHOME</span></div>
@@ -119,8 +189,8 @@ input[type="number"]{appearance:textfield}
         <option value="">Комнат</option>
         <option>1</option><option>2</option><option>3</option><option>4+</option>
       </select>
-      <input class="input" id="qMin" type="number" placeholder="Цена от, ₽">
-      <input class="input" id="qMax" type="number" placeholder="Цена до, ₽">
+      <input class="input" id="qMin" type="number" placeholder="Цена от, €">
+      <input class="input" id="qMax" type="number" placeholder="Цена до, €">
       <button class="btn small" id="applyFilter">Найти</button>
       <button class="btn small secondary" id="resetFilter">Сброс</button>
     </div>
@@ -139,7 +209,7 @@ input[type="number"]{appearance:textfield}
   <div class="container two grid">
     <div class="box">
       <h2 class="h2">О компании</h2>
-      <p id="aboutText" class="muted">CITYHOME — команда не специалистом</p>
+      <p id="aboutText" class="muted">CITYHOME — команда профессионалов в сфере недвижимости.</p>
       <div class="tags" style="margin-top:10px">
         <span class="tag">Юр. сопровождение</span>
         <span class="tag">Ипотека</span>
@@ -158,11 +228,11 @@ input[type="number"]{appearance:textfield}
           <div class="muted">средний срок подбора</div>
         </div>
         <div class="card card-body">
-          <div class="price" style="color:var(--accent)">110%</div>
+          <div class="price" style="color:var(--accent)">0%</div>
           <div class="muted">скрытых комиссий</div>
         </div>
         <div class="card card-body">
-          <div class="price" style="color:var(--accent-2)">Никогда</div>
+          <div class="price" style="color:var(--accent-2)">Всегда</div>
           <div class="muted">на связи</div>
         </div>
       </div>
@@ -182,13 +252,13 @@ input[type="number"]{appearance:textfield}
         <input class="input" name="email" type="email" placeholder="E-mail">
         <textarea class="input" name="msg" rows="4" placeholder="Какая квартира интересует?"></textarea>
         <button class="btn">Отправить</button>
-        <div class="small muted">Помогите нам стать быстрее, звоните на мобильный.</div>
+        <div class="small muted">Наш менеджер свяжется с вами в ближайшее время.</div>
       </form>
       <div id="leadThank" class="card card-body" style="display:none;margin-top:12px">Спасибо! Мы свяжемся с вами в ближайшее время.</div>
     </div>
     <div class="box" id="contact">
       <h2 class="h2">Контакты</h2>
-      <p><b>Телефон:</b> <span id="cPhone">+4367763480888</span></p>
+      <p><b>Телефон:</b> <span id="cPhone">+43 677 63480888</span></p>
       <p><b>E-mail:</b> <span id="cEmail">vladglad1441@gmail.com</span></p>
       <p><b>Офис:</b> <span id="cAddr">Австрия, Дом Моцарта 901</span></p>
       <div class="inline" style="margin-top:8px">
@@ -204,123 +274,27 @@ input[type="number"]{appearance:textfield}
   <div class="container">© <span id="brandFoot">CITYHOME</span>. Все права защищены.</div>
 </footer>
 
-<!-- Подсказка и панель админа (скрыты, включаются Ctrl+Shift+A) -->
-<div class="admin-hint" id="adminHint">Режим редактирования включён. Ctrl+Shift+A — выключить.</div>
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-header">
-    <div><b>Админ-панель</b> · <span class="small">Данные сохраняются в localStorage</span></div>
-    <button class="btn small secondary" id="closeAdmin">Закрыть</button>
-  </div>
-  <div class="admin-body">
-    <div class="row">
-      <b>Общие настройки</b>
-      <div class="inline">
-        <input class="input" id="setBrand" placeholder="Название (бренд)">
-        <input class="input" id="setPhone" placeholder="Телефон">
-      </div>
-      <div class="inline">
-        <input class="input" id="setEmail" placeholder="E-mail">
-        <input class="input" id="setAddr" placeholder="Адрес">
-      </div>
-      <input class="input" id="setIg" placeholder="Instagram URL">
-      <input class="input" id="setYt" placeholder="YouTube URL">
-      <input class="input" id="setTg" placeholder="Telegram URL">
-      <input class="input" id="setHero" placeholder="URL фонового изображения (hero)">
-      <textarea class="input" id="setAbout" rows="3" placeholder="Текст блока «О компании»"></textarea>
-      <div class="inline">
-        <button class="btn small" id="saveSettings">Сохранить</button>
-        <button class="btn small secondary" id="resetSettings">Сбросить</button>
-      </div>
-    </div>
-
-    <hr class="sep">
-
-    <div class="row">
-      <b>Каталог квартир</b>
-      <table id="flatsTable">
-        <thead>
-          <tr><th>Фото (URL)</th><th>Заголовок</th><th>Локация</th><th>Комнат</th><th>Площадь</th><th>Цена (₽)</th><th></th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <div class="row">
-        <b>Добавить квартиру</b>
-        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
-          <input class="input" id="newImg" placeholder="Фото (URL)">
-          <input class="input" id="newTitle" placeholder="Заголовок">
-          <input class="input" id="newLoc" placeholder="Локация">
-          <input class="input" id="newRooms" type="number" placeholder="Комнат">
-          <input class="input" id="newArea" type="number" placeholder="Площадь, м²">
-          <input class="input" id="newPrice" type="number" placeholder="Цена, ₽">
-        </div>
-        <textarea class="input" id="newDesc" rows="2" placeholder="Описание"></textarea>
-        <button class="btn small" id="addFlat">Добавить</button>
-      </div>
-    </div>
+<!-- ===== Модальное окно квартиры ===== -->
+<div class="flat-modal" id="flatModal">
+  <div class="flat-modal-inner">
+    <button class="btn small secondary close-modal" id="closeModal">Закрыть</button>
+    <div id="flatContent"></div>
   </div>
 </div>
 
 <script>
-/* ====== CITYHOME — логика ====== */
-const LS = {
-  settings: 'ch_settings_v1',
-  flats: 'ch_flats_v1',
-  leads: 'ch_leads_v1'
-};
-const ADMIN_PASS = 'cityhome2025'; // ← СМЕНИТЕ ПАРОЛЬ!
-
-const $ = (s, r=document)=>r.querySelector(s);
-const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
-const load = (k, f)=>{ try{ const v = localStorage.getItem(k); return v? JSON.parse(v): f }catch(_){ return f } };
-const save = (k, v)=> localStorage.setItem(k, JSON.stringify(v));
 const money = n => new Intl.NumberFormat('ru-RU').format(Number(n||0));
 
-const DEFAULT_SETTINGS = {
-  brand: 'CITYHOME',
-  phone: '+43 677 63480888',
-  email: 'vladglad1441@gmail.com',
-  addr: 'Австрия, Дом 911',
-  ig:'#', yt:'#', tg:'#',
-  hero: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c52f?auto=format&fit=crop&w=2000&q=80',
-  about: 'CITYHOME — мы команда просто класс :).'
-};
-const DEFAULT_FLATS = [
-  {id:'f1', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Полу пустая квартира', loc:'Здеся', rooms:2, area:44, price:11500000, desc:'Светлая кухня-гостиная, раздельный санузел, 10 минут до метро.'},
-  {id:'f2', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Квартира без мебели', loc:'Тама', rooms:1, area:27, price:6500000, desc:'Высокие потолки, тёплые полы, закрытый двор без машин.'},
-  {id:'f3', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Квартира Квартира', loc:'Тута', rooms:3, area:72, price:15900000, desc:'Две детские, лоджия, зелёный район, рядом школы и садики.'}
+const FLATS = [
+  {id:'f1', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Светлая квартира в центре', loc:'Центр', rooms:2, area:44, price:11500000, desc:'Светлая кухня-гостиная, раздельный санузел, 10 минут до метро.'},
+  {id:'f2', img:'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=1200&q=80', title:'Квартира у набережной', loc:'Набережная', rooms:3, area:72, price:15900000, desc:'Просторная гостиная, лоджия, зелёный район, рядом школы и садики.'},
+  {id:'f3', img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', title:'Уютная студия', loc:'Северный район', rooms:1, area:27, price:6500000, desc:'Высокие потолки, тёплые полы, закрытый двор без машин.'}
 ];
 
-let SETTINGS = load(LS.settings, DEFAULT_SETTINGS);
-let FLATS = load(LS.flats, DEFAULT_FLATS);
-let LEADS = load(LS.leads, []);
-
-/* ---- Apply settings to UI ---- */
-function applySettings(){
-  $('#brandName').textContent = SETTINGS.brand;
-  $('#brandFoot').textContent = SETTINGS.brand;
-  $('#cPhone').textContent = SETTINGS.phone;
-  $('#cEmail').textContent = SETTINGS.email;
-  $('#cAddr').textContent = SETTINGS.addr;
-  $('#socIg').href = SETTINGS.ig || '#';
-  $('#socYt').href = SETTINGS.yt || '#';
-  $('#socTg').href = SETTINGS.tg || '#';
-  $('#heroTitle').textContent = `${SETTINGS.brand} — квартиры вашей мечты`;
-  $('#aboutText').textContent = SETTINGS.about;
-  document.querySelector('.hero')?.style.setProperty('--hero', `url('${SETTINGS.hero}')`);
-  // подменим фон hero через псевдоэлемент:
-  const style = document.createElement('style');
-  style.textContent = `.hero::before{background:
-    linear-gradient(180deg,rgba(11,12,14,.25),rgba(11,12,14,.85)),
-    url('${SETTINGS.hero}') center/cover no-repeat;}`;
-  document.head.appendChild(style);
-}
-applySettings();
-
-/* ---- Render flats ---- */
-function renderFlats(list=FLATS){
-  const grid = $('#flatsGrid');
+function renderFlats(){
+  const grid = document.getElementById('flatsGrid');
   grid.innerHTML = '';
-  list.forEach(f=>{
+  FLATS.forEach(f=>{
     const el = document.createElement('article');
     el.className = 'card';
     el.innerHTML = `
@@ -328,7 +302,7 @@ function renderFlats(list=FLATS){
       <div class="card-body">
         <div class="inline" style="justify-content:space-between;align-items:center">
           <h3 style="margin:0">${f.title}</h3>
-          <div class="price">₽ ${money(f.price)}</div>
+          <div class="price">€ ${money(f.price)}</div>
         </div>
         <div class="tags">
           <span class="tag">${f.loc}</span>
@@ -336,22 +310,18 @@ function renderFlats(list=FLATS){
           <span class="tag">${f.area} м²</span>
         </div>
         <p class="muted" style="margin:8px 0 0 0">${f.desc||''}</p>
-        <div class="inline" style="margin-top:10px">
-          <a class="btn small" href="#lead" data-prefill="${f.title}">Оставить заявку</a>
-          <button class="btn small secondary js-del" data-id="${f.id}" style="display:none">Удалить</button>
-        </div>
       </div>`;
     grid.appendChild(el);
   });
 }
 renderFlats();
 
-/* ---- Filters ---- */
-$('#applyFilter').addEventListener('click', ()=>{
-  const loc = ($('#qLocation').value||'').trim().toLowerCase();
-  const r = $('#qRooms').value;
-  const min = Number($('#qMin').value||0);
-  const max = Number($('#qMax').value||0);
+/* фильтр */
+document.getElementById('applyFilter').addEventListener('click', ()=>{
+  const loc = (document.getElementById('qLocation').value||'').trim().toLowerCase();
+  const r = document.getElementById('qRooms').value;
+  const min = Number(document.getElementById('qMin').value||0);
+  const max = Number(document.getElementById('qMax').value||0);
   const filtered = FLATS.filter(f=>{
     const okLoc = !loc || f.loc.toLowerCase().includes(loc);
     const okRooms = !r || (r==='4+' ? f.rooms>=4 : String(f.rooms)===r);
@@ -359,174 +329,63 @@ $('#applyFilter').addEventListener('click', ()=>{
     const okMax = !max || f.price<=max;
     return okLoc && okRooms && okMin && okMax;
   });
-  renderFlats(filtered);
+  const grid = document.getElementById('flatsGrid');
+  grid.innerHTML='';
+  filtered.forEach(f=>{
+    const el=document.createElement('article');
+    el.className='card';
+    el.innerHTML=`<div class="fimg"><img src="${f.img}" alt="${f.title}"></div>
+    <div class="card-body">
+    <div class="inline" style="justify-content:space-between;align-items:center">
+    <h3 style="margin:0">${f.title}</h3><div class="price">€ ${money(f.price)}</div></div>
+    <div class="tags"><span class="tag">${f.loc}</span><span class="tag">${f.rooms} комн.</span><span class="tag">${f.area} м²</span></div>
+    <p class="muted" style="margin:8px 0 0 0">${f.desc||''}</p></div>`;
+    grid.appendChild(el);
+  });
 });
-$('#resetFilter').addEventListener('click', ()=>{
-  $('#qLocation').value=''; $('#qRooms').value=''; $('#qMin').value=''; $('#qMax').value='';
+document.getElementById('resetFilter').addEventListener('click', ()=>{
+  document.getElementById('qLocation').value='';
+  document.getElementById('qRooms').value='';
+  document.getElementById('qMin').value='';
+  document.getElementById('qMax').value='';
   renderFlats();
 });
 
-/* ---- lead form ---- */
-$('#flatsGrid').addEventListener('click', (e)=>{
-  const a = e.target.closest('a[data-prefill]');
-  if(a){
-    const t = a.getAttribute('data-prefill');
-    const msg = document.querySelector('#leadForm textarea[name="msg"]');
-    msg.value = `Интересует квартира: ${t}`;
-  }
-});
-$('#leadForm').addEventListener('submit', (e)=>{
+/* форма */
+document.getElementById('leadForm').addEventListener('submit', e=>{
   e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target).entries());
-  LEADS.push({...data, id:Date.now().toString(36)});
-  save(LS.leads, LEADS);
   e.target.reset();
-  $('#leadThank').style.display='block';
-  setTimeout(()=>$('#leadThank').style.display='none', 4000);
+  document.getElementById('leadThank').style.display='block';
+  setTimeout(()=>document.getElementById('leadThank').style.display='none', 4000);
 });
 
-/* ====== ADMIN MODE (скрытый, по Ctrl+Shift+A, с паролем) ====== */
-let ADMIN = false;
-const adminPanel = $('#adminPanel');
-const adminHint = $('#adminHint');
+/* модалка */
+const modal = document.getElementById('flatModal');
+const modalContent = document.getElementById('flatContent');
+document.getElementById('closeModal').addEventListener('click', ()=> modal.classList.remove('show'));
 
-function toggleAdmin(force){
-  ADMIN = typeof force==='boolean' ? force : !ADMIN;
-  sessionStorage.setItem('ch_admin', ADMIN?'1':'0');
-  adminPanel.classList.toggle('show', ADMIN);
-  adminHint.classList.toggle('show', ADMIN);
-  // показать кнопки удаления
-  $$('.js-del').forEach(b=> b.style.display = ADMIN? 'inline-flex':'none');
-  if(ADMIN) fillAdminForm();
-}
-document.addEventListener('keydown', (e)=>{
-  if(e.ctrlKey && e.shiftKey && e.code==='KeyA'){
-    if(!ADMIN){
-      const pass = prompt('Введите пароль администратора:');
-      if(pass!==ADMIN_PASS){ alert('Неверный пароль'); return; }
-    }
-    toggleAdmin();
-  }
-});
-if(sessionStorage.getItem('ch_admin')==='1') toggleAdmin(true);
-$('#closeAdmin').addEventListener('click', ()=> toggleAdmin(false));
-
-/* ---- Admin: populate form ---- */
-function fillAdminForm(){
-  $('#setBrand').value = SETTINGS.brand;
-  $('#setPhone').value = SETTINGS.phone;
-  $('#setEmail').value = SETTINGS.email;
-  $('#setAddr').value = SETTINGS.addr;
-  $('#setIg').value = SETTINGS.ig || '';
-  $('#setYt').value = SETTINGS.yt || '';
-  $('#setTg').value = SETTINGS.tg || '';
-  $('#setHero').value = SETTINGS.hero || '';
-  $('#setAbout').value = SETTINGS.about || '';
-  renderTable();
-}
-
-/* ---- Admin: save / reset ---- */
-$('#saveSettings').addEventListener('click', ()=>{
-  SETTINGS = {
-    brand: $('#setBrand').value.trim() || 'CITYHOME',
-    phone: $('#setPhone').value.trim(),
-    email: $('#setEmail').value.trim(),
-    addr: $('#setAddr').value.trim(),
-    ig: $('#setIg').value.trim(),
-    yt: $('#setYt').value.trim(),
-    tg: $('#setTg').value.trim(),
-    hero: $('#setHero').value.trim() || DEFAULT_SETTINGS.hero,
-    about: $('#setAbout').value.trim()
-  };
-  save(LS.settings, SETTINGS);
-  applySettings();
-  alert('Сохранено');
-});
-$('#resetSettings').addEventListener('click', ()=>{
-  if(confirm('Сбросить настройки к значениям по умолчанию?')){
-    localStorage.removeItem(LS.settings);
-    SETTINGS = DEFAULT_SETTINGS;
-    applySettings();
-    fillAdminForm();
-  }
-});
-
-/* ---- Admin: flats table ---- */
-function renderTable(){
-  const tb = $('#flatsTable tbody');
-  tb.innerHTML = '';
-  FLATS.forEach(f=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="min-width:180px"><input class="input" value="${f.img}" data-k="img" data-id="${f.id}"></td>
-      <td><input class="input" value="${escapeHtml(f.title)}" data-k="title" data-id="${f.id}"></td>
-      <td><input class="input" value="${escapeHtml(f.loc)}" data-k="loc" data-id="${f.id}"></td>
-      <td style="width:80px"><input class="input" type="number" value="${f.rooms}" data-k="rooms" data-id="${f.id}"></td>
-      <td style="width:100px"><input class="input" type="number" value="${f.area}" data-k="area" data-id="${f.id}"></td>
-      <td style="width:140px"><input class="input" type="number" value="${f.price}" data-k="price" data-id="${f.id}"></td>
-      <td style="width:90px"><button class="btn small secondary js-remove" data-id="${f.id}">Удалить</button></td>
-    `;
-    tb.appendChild(tr);
-  });
-}
-function escapeHtml(s=''){ return s.replace(/[&<>"']/g, m=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m])); }
-
-$('#flatsTable').addEventListener('input', (e)=>{
-  const t = e.target;
-  if(!t.matches('[data-k]')) return;
-  const id = t.dataset.id, k=t.dataset.k;
-  const flat = FLATS.find(x=>x.id===id);
+document.getElementById('flatsGrid').addEventListener('click', (e)=>{
+  const card = e.target.closest('.card');
+  if(!card) return;
+  const title = card.querySelector('h3')?.textContent;
+  const flat = FLATS.find(f=>f.title===title);
   if(!flat) return;
-  flat[k] = (k==='rooms' || k==='area' || k==='price') ? Number(t.value||0) : t.value;
-  save(LS.flats, FLATS);
-  renderFlats(); // мгновенное обновление каталога
-});
-$('#flatsTable').addEventListener('click', (e)=>{
-  const btn = e.target.closest('.js-remove');
-  if(!btn) return;
-  const id = btn.dataset.id;
-  if(confirm('Удалить эту квартиру?')){
-    FLATS = FLATS.filter(x=>x.id!==id);
-    save(LS.flats, FLATS);
-    renderTable(); renderFlats();
-  }
-});
-
-/* ---- Admin: add flat ---- */
-$('#addFlat').addEventListener('click', ()=>{
-  const f = {
-    id: Date.now().toString(36),
-    img: $('#newImg').value.trim(),
-    title: $('#newTitle').value.trim() || 'Новая квартира',
-    loc: $('#newLoc').value.trim() || 'Район',
-    rooms: Number($('#newRooms').value || 1),
-    area: Number($('#newArea').value || 30),
-    price: Number($('#newPrice').value || 1000000),
-    desc: $('#newDesc').value.trim()
-  };
-  if(!f.img){ alert('Укажите URL изображения'); return; }
-  FLATS.unshift(f);
-  save(LS.flats, FLATS);
-  renderTable(); renderFlats();
-  // очистить форму добавления
-  ['newImg','newTitle','newLoc','newRooms','newArea','newPrice','newDesc'].forEach(id=> $('#'+id).value='');
-});
-
-/* ---- Delete from cards (visible in admin) ---- */
-$('#flatsGrid').addEventListener('click', (e)=>{
-  const b = e.target.closest('.js-del');
-  if(!b) return;
-  const id = b.dataset.id;
-  if(confirm('Удалить эту квартиру?')){
-    FLATS = FLATS.filter(x=>x.id!==id);
-    save(LS.flats, FLATS);
-    renderTable(); renderFlats();
-  }
+  modalContent.innerHTML = `
+    <h2>${flat.title}</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:10px">
+      <img src="${flat.img}" alt="${flat.title}">
+      <img src="${flat.img}" alt="${flat.title}">
+      <img src="${flat.img}" alt="${flat.title}">
+    </div>
+    <p><b>Локация:</b> ${flat.loc}</p>
+    <p><b>Комнат:</b> ${flat.rooms}</p>
+    <p><b>Площадь:</b> ${flat.area} м²</p>
+    <p><b>Цена:</b> € ${money(flat.price)}</p>
+    <p class="muted">${flat.desc}</p>
+    <a href="#lead" class="btn small" onclick="modal.classList.remove('show')">Оставить заявку</a>
+  `;
+  modal.classList.add('show');
 });
 </script>
 </body>
 </html>
-
-
-
-
